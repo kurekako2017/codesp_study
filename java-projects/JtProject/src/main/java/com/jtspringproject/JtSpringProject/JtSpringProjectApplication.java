@@ -9,6 +9,7 @@ public class JtSpringProjectApplication {
 
 	public static void main(String[] args) {
 		System.out.println("test1");
+	
 		SpringApplication.run(JtSpringProjectApplication.class, args);
 	}
 
