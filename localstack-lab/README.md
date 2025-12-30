@@ -10,11 +10,12 @@
 
 快速开始（Python 示例）：
 1) 在本目录执行 `./scripts/bootstrap.sh`，创建虚拟环境并装依赖。
-2) 确保 LocalStack 已启动（如 `localstack start` 或 docker-compose）。
-3) 运行示例：`source .venv/bin/activate && python projects/hello-localstack/main.py`。
+2) 确保 LocalStack 已启动（如 `localstack start` 或 docker-compose`）。
+3) 运行示例：`source .venv/bin/activate && python projects/hello-localstack/main.py`（默认端点 `http://s3.localhost.localstack.cloud:4566`，可用 `LOCALSTACK_ENDPOINT_URL` 覆盖）。
 
 Java 示例：
 1) `cd projects/hello-localstack-java`
-2) `mvn -q package && mvn -q exec:java`（默认连接 `http://localhost:4566`，可用环境变量 `LOCALSTACK_ENDPOINT_URL` 覆盖）。
+2) `mvn -q package` 
+3) `LOCALSTACK_ENDPOINT_URL=http://s3.localhost.localstack.cloud:4566 mvn -q exec:java`
 
 请将 LocalStack 相关依赖都放在本目录内，避免影响其他项目。

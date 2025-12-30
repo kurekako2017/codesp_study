@@ -12,7 +12,8 @@ from botocore.exceptions import BotoCoreError, ClientError
 
 
 def main() -> None:
-    endpoint = os.getenv("LOCALSTACK_ENDPOINT_URL", "http://localhost:4566")
+    # Host-style endpoint recommended by LocalStack for S3
+    endpoint = os.getenv("LOCALSTACK_ENDPOINT_URL", "http://s3.localhost.localstack.cloud:4566")
     bucket = "hello-localstack-bucket"
     key = "hello.txt"
     body = f"Hello LocalStack! UTC now: {datetime.now().isoformat()}\n"

@@ -1,22 +1,22 @@
 # Hello LocalStack
 
-Minimal example using LocalStack. The script creates an S3 bucket and uploads a test object using boto3 with LocalStack endpoints.
+最小化 LocalStack 示例：使用 boto3 创建 S3 bucket 并上传/读取对象。
 
-## Requirements
-- LocalStack running locally (e.g., `localstack start` or Docker). Default endpoints: http://localhost:4566
-- Python 3.9+ and boto3 installed (bootstrap script sets up venv and installs requirements)
+## 依赖
+- 已启动的 LocalStack（建议端点 `http://s3.localhost.localstack.cloud:4566`）
+- Python 3.9+，boto3（`./scripts/bootstrap.sh` 会创建 `.venv` 并安装依赖）
 
-## Quick run
+## 快速运行
 
 ```bash
 cd /workspaces/study/localstack-lab
 ./scripts/bootstrap.sh
 source .venv/bin/activate
-# ensure LocalStack is running before this step
+# 确保 LocalStack 已启动
 python projects/hello-localstack/main.py
 ```
 
-## Environment
-- Uses `LOCALSTACK_ENDPOINT_URL` if set; otherwise defaults to `http://localhost:4566`.
-- Bucket name: `hello-localstack-bucket`
+## 环境
+- 可设置 `LOCALSTACK_ENDPOINT_URL`，默认 `http://s3.localhost.localstack.cloud:4566`
+- Bucket: `hello-localstack-bucket`
 - Object key: `hello.txt`
