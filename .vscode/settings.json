@@ -1,4 +1,7 @@
 {
     "java.compile.nullAnalysis.mode": "automatic",
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "aws.experimental.endpoints": {
+        "s3": "http://s3.localhost.localstack.cloud:4566"
+    }
 }
