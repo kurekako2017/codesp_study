@@ -45,7 +45,10 @@ public class HibernateConfiguration {
         dataSource.setDriverClassName(DRIVER);
         dataSource.setUrl(URL);
         dataSource.setUsername(USERNAME);
-        dataSource.setPassword(PASSWORD);
+        // Handle empty password for H2 database
+        if (PASSWORD != null && !PASSWORD.trim().isEmpty()) {
+            dataSource.setPassword(PASSWORD);
+        }
         return dataSource;
     }
  
