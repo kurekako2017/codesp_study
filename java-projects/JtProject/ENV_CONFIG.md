@@ -1,5 +1,86 @@
 # 环境配置说明
 
+## 应用启动方式（多种方式任选）
+
+### 方式1: 直接运行Java主类 ⭐ 最简单
+**在VS Code或任意IDE中：**
+1. 打开文件: `src/main/java/com/jtspringproject/JtSpringProject/JtSpringProjectApplication.java`
+2. 点击主类上方的 `▶ Run` 按钮，或右键选择 `Run Java`
+3. 应用启动成功后访问 http://localhost:8080
+
+**切换环境配置：**
+- 方法1: 编辑 `application.properties` 修改默认配置
+- 方法2: 在IDE运行配置中添加VM参数：`-Dspring.profiles.active=remote`
+
+**VS Code配置运行参数（可选）：**
+创建 `java-projects/JtProject/.vscode/launch.json`（项目根目录下）：
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "JtSpringProject (Default H2)",
+      "request": "launch",
+      "mainClass": "com.jtspringproject.JtSpringProject.JtSpringProjectApplication",
+      "projectName": "JtSpringProject",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "java",
+      "name": "JtSpringProject (Remote MySQL)",
+      "request": "launch",
+      "mainClass": "com.jtspringproject.JtSpringProject.JtSpringProjectApplication",
+      "projectName": "JtSpringProject",
+      "vmArgs": "-Dspring.profiles.active=remote",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "java",
+      "name": "JtSpringProject (Local MySQL)",
+      "request": "launch",
+      "mainClass": "com.jtspringproject.JtSpringProject.JtSpringProjectApplication",
+      "projectName": "JtSpringProject",
+      "vmArgs": "-Dspring.profiles.active=mysql",
+      "console": "integratedTerminal"
+    }
+  ]
+}
+```
+配置后在VS Code中按 `F5` 或点击 `Run and Debug` 面板选择配置启动。
+
+### 方式2: 使用Maven命令行
+```bash
+cd /workspaces/study/java-projects/JtProject
+
+# 默认启动（H2持久化）
+mvn spring-boot:run
+
+# 指定profile启动
+mvn spring-boot:run -Dspring-boot.run.profiles=remote
+```
+
+### 方式3: 使用启动脚本（交互式）
+```bash
+cd /workspaces/study/java-projects/JtProject
+./start.sh
+# 然后选择环境：1-默认H2, 2-local, 3-remote, 4-mysql
+```
+
+### 方式4: 打包后运行JAR
+```bash
+# 1. 构建JAR包
+mvn clean package
+
+# 2. 运行JAR（默认配置）
+java -jar target/JtSpringProject-0.0.1-SNAPSHOT.jar
+
+# 3. 指定profile运行
+java -jar target/JtSpringProject-0.0.1-SNAPSHOT.jar --spring.profiles.active=remote
+```
+
+---
+
 ## 环境切换方式（Spring Profile）
 
 本项目配置了多个环境Profile，可以通过指定`spring.profiles.active`快速切换：
@@ -137,10 +218,34 @@ mvn spring-boot:run -Dspring-boot.run.profiles=mysql
 - **管理员登录**: http://localhost:8080/admin/login
 - **H2数据库控制台**: http://localhost:8080/h2-console
 
+### 默认账户（已自动初始化）
+- **管理员**: `admin` / `123`
+- **普通用户**: `lisa` / `765`
+- **测试数据**: 9个商品分类，2个示例商品
+
 ### H2控制台连接信息
 - **JDBC URL**: `jdbc:h2:file:./data/ecommjava`（文件模式）或 `jdbc:h2:mem:ecommjava`（内存模式）
 - **用户名**: `sa`
 - **密码**: 空
+
+---
+
+## 快速启动参考表
+
+| 启动方式 | 命令/操作 | 优点 | 适用场景 |
+|---------|----------|------|----------|
+| **IDE运行主类** ⭐ | 点击 `Run Java` | 最简单，调试方便 | 日常开发、调试 |
+| **Maven命令** | `mvn spring-boot:run` | 标准方式 | 命令行操作 |
+| **启动脚本** | `./start.sh` | 交互式选择环境 | 快速切换环境 |
+| **JAR包运行** | `java -jar xxx.jar` | 可部署 | 生产环境、测试 |
+
+### 环境切换快速对照
+
+| 需求 | IDE主类运行 | Maven命令 | JAR运行 |
+|------|------------|-----------|---------|
+| 默认H2 | 直接点运行 | `mvn spring-boot:run` | `java -jar target/xxx.jar` |
+| 远程MySQL | 添加VM参数<br/>`-Dspring.profiles.active=remote` | `mvn spring-boot:run -Dspring-boot.run.profiles=remote` | `java -jar target/xxx.jar --spring.profiles.active=remote` |
+| 本地MySQL | 添加VM参数<br/>`-Dspring.profiles.active=mysql` | `mvn spring-boot:run -Dspring-boot.run.profiles=mysql` | `java -jar target/xxx.jar --spring.profiles.active=mysql` |
 
 ## 配置文件说明
 
