@@ -16,16 +16,15 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jtspringproject.JtSpringProject.services.cartService;
+import com.jtspringproject.JtSpringProject.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jtspringproject.JtSpringProject.services.userService;
-import com.jtspringproject.JtSpringProject.services.productService;
-import com.jtspringproject.JtSpringProject.services.cartService;
+import com.jtspringproject.JtSpringProject.services.UserService;
+import com.jtspringproject.JtSpringProject.services.ProductService;
 
 
 
@@ -33,10 +32,10 @@ import com.jtspringproject.JtSpringProject.services.cartService;
 public class UserController{
 	
 	@Autowired
-	private userService userService;
+	private UserService userService;
 
 	@Autowired
-	private productService productService;
+	private ProductService productService;
 
 	@GetMapping("/register")
 	public String registerUser()

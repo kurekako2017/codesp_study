@@ -3,9 +3,9 @@ package com.jtspringproject.JtSpringProject.controller;
 import com.jtspringproject.JtSpringProject.models.User;
 import com.jtspringproject.JtSpringProject.models.Product;
 import com.jtspringproject.JtSpringProject.models.Category;
-import com.jtspringproject.JtSpringProject.services.userService;
-import com.jtspringproject.JtSpringProject.services.productService;
-import com.jtspringproject.JtSpringProject.services.categoryService;
+import com.jtspringproject.JtSpringProject.services.UserService;
+import com.jtspringproject.JtSpringProject.services.ProductService;
+import com.jtspringproject.JtSpringProject.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -51,13 +51,13 @@ public class UserControllerTest {
     private MockMvc mockMvc;
     
     @Autowired
-    private userService userService;
+    private UserService userService;
     
     @Autowired
-    private productService productService;
+    private ProductService productService;
     
     @Autowired
-    private categoryService categoryService;
+    private CategoryService categoryService;
     
     private User testUser;
     private Category testCategory;

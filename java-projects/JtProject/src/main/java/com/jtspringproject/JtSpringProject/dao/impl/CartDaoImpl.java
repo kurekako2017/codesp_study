@@ -1,16 +1,20 @@
-package com.jtspringproject.JtSpringProject.dao;
+package com.jtspringproject.JtSpringProject.dao.impl;
 
 import java.util.List;
 
+import com.jtspringproject.JtSpringProject.dao.CartDao;
 import com.jtspringproject.JtSpringProject.models.Cart;
-import com.jtspringproject.JtSpringProject.models.Category;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 购物车数据访问实现类
+ */
 @Repository
-public class cartDao {
+public class CartDaoImpl implements CartDao {
+    
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -18,31 +22,26 @@ public class cartDao {
         this.sessionFactory = sf;
     }
 
+    @Override
     @Transactional
     public Cart addCart(Cart cart) {
         this.sessionFactory.getCurrentSession().save(cart);
         return cart;
     }
 
+    @Override
     @Transactional
     public List<Cart> getCarts() {
         return this.sessionFactory.getCurrentSession().createQuery("from CART").list();
     }
 
-//    @Transactional
-//    public List<Cart> getCartsByCustomerID(Integer customer_id) {
-//        String hql = "from CART where CART.customer_id = :customer_id";
-//        return this.sessionFactory.getCurrentSession()
-//                .createQuery(hql, Cart.class)
-//                .setParameter("customer_id", customer_id)
-//                .list();
-//    }
-
+    @Override
     @Transactional
     public void updateCart(Cart cart) {
         this.sessionFactory.getCurrentSession().update(cart);
     }
 
+    @Override
     @Transactional
     public void deleteCart(Cart cart) {
         this.sessionFactory.getCurrentSession().delete(cart);

@@ -16,9 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jtspringproject.JtSpringProject.models.Category;
 import com.jtspringproject.JtSpringProject.models.Product;
 import com.jtspringproject.JtSpringProject.models.User;
-import com.jtspringproject.JtSpringProject.services.categoryService;
-import com.jtspringproject.JtSpringProject.services.productService;
-import com.jtspringproject.JtSpringProject.services.userService;
+import com.jtspringproject.JtSpringProject.services.CategoryService;
+import com.jtspringproject.JtSpringProject.services.ProductService;
+import com.jtspringproject.JtSpringProject.services.UserService;
 import com.mysql.cj.protocol.Resultset;
 
 import net.bytebuddy.asm.Advice.This;
@@ -29,12 +29,12 @@ import net.bytebuddy.asm.Advice.OffsetMapping.ForOrigin.Renderer.ForReturnTypeNa
 public class AdminController {
 	
 	@Autowired
-	private userService userService;
+	private UserService userService;
 	@Autowired
-	private categoryService categoryService;
+	private CategoryService categoryService;
 	
 	@Autowired
-	private productService productService;
+	private ProductService productService;
 	
 	int adminlogcheck = 0;
 	String usernameforclass = "";
