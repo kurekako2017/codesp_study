@@ -13,8 +13,6 @@ import software.amazon.awssdk.core.ResponseBytes;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.core.sync.ResponseTransformer;
 import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
-import software.amazon.awssdk.services.s3.model.CreateBucketConfiguration;
-import software.amazon.awssdk.services.s3.model.BucketLocationConstraint;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
@@ -30,15 +28,15 @@ public class App {
         S3Client s3 = S3Client.builder()
             .endpointOverride(URI.create(endpoint))
             .region(Region.US_EAST_1)
+            // LocalStack 走 localhost:4566 需要 path-style，否则虚拟域名解析会失败
+            .serviceConfiguration(S3Configuration.builder().pathStyleAccessEnabled(true).build())
             .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create("test", "test")))
             .build();
 
         try {
-            s3.createBucket(CreateBucketRequest.builder()
+                // S3 us-east-1 不需要设置 LocationConstraint；LocalStack 亦同，直接创建桶即可
+                s3.createBucket(CreateBucketRequest.builder()
                     .bucket(bucket)
-                    .createBucketConfiguration(CreateBucketConfiguration.builder()
-                            .locationConstraint(BucketLocationConstraint.US_EAST_1)
-                            .build())
                     .build());
         } catch (S3Exception e) {
             if (!"BucketAlreadyOwnedByYou".equals(e.awsErrorDetails().errorCode())) {
