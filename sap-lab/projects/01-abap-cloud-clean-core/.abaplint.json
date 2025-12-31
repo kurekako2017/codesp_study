@@ -1,0 +1,39 @@
+{
+  "global": {
+    "files": "/src/**/*.*",
+    "skipLines": [],
+    "skipPragmas": []
+  },
+  "syntax": {
+    "version": "v740sp05"
+  },
+  "rules": {
+    "activate": {
+      "exclude": []
+    },
+    "allowed_object_naming": {
+      "exclude": [],
+      "patterns": [
+        "^(LCL|GCL)_.*$",
+        "^Z[A-Z0-9_]*$"
+      ]
+    },
+    "camel_case_keywords": {
+      "exclude": []
+    },
+    "downport": {
+      "exclude": []
+    },
+    "empty_line_in_statement": {
+      "exclude": []
+    },
+    "line_length": {
+      "exclude": [],
+      "length": 120
+    },
+    "line_too_long": {
+      "exclude": [],
+      "length": 120
+    }
+  }
+}
