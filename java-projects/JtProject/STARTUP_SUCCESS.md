@@ -148,14 +148,28 @@ logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 
 ### 开发工具集成
 
-#### IntelliJ IDEA
+#### IntelliJ IDEA（推荐）⭐
+详细的 IDEA 使用指南请查看: **[IDEA_启动指南.md](IDEA_启动指南.md)**
+
+**快速开始**:
 1. 打开项目: `File -> Open -> D:\dev\study\java-projects\JtProject`
 2. Maven自动导入依赖
 3. 配置JDK 11: `File -> Project Structure -> Project SDK`
-4. 运行配置: 
-   - Main class: `com.jtspringproject.JtSpringProject.JtSpringProjectApplication`
-   - VM options: （留空）
-   - Working directory: `$MODULE_DIR$`
+4. 运行主类: 
+   - 打开 `JtSpringProjectApplication.java`
+   - 点击 `main` 方法旁的绿色运行图标 ▶
+   - 或按 `Shift + F10`
+
+**完整功能**:
+- ✅ 直接运行/调试主类
+- ✅ Maven 面板打包
+- ✅ Spring Boot Dashboard（Ultimate）
+- ✅ 热部署配置
+- ✅ 数据库工具集成
+- ✅ HTTP 客户端测试
+- ✅ Git 版本控制
+
+详见: [IDEA_启动指南.md](IDEA_启动指南.md)
 
 #### Eclipse
 1. 导入Maven项目: `File -> Import -> Existing Maven Projects`
@@ -222,6 +236,7 @@ JtProject/
 
 ### 相关文档
 
+- [IDEA启动指南](IDEA_启动指南.md) - IntelliJ IDEA 完整使用教程
 - [Controller注释说明](CONTROLLER_注释说明.md)
 - [JavaDoc和日志总结](JAVADOC_LOGGING_SUMMARY.md)
 - [重构指南](REFACTORING_GUIDE.md)
