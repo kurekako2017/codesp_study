@@ -20,21 +20,26 @@ print("1. 基本数据类型")
 print("=" * 60)
 
 # 整数和浮点数
+# int: 整数类型，用于存储整数值
 age = 25
+# float: 浮点数类型，用于存储小数值
 height = 1.75
+# type() 函数返回变量的数据类型，.__name__ 获取类型的名称字符串
 print(f"年龄: {age} (类型: {type(age).__name__})")
 print(f"身高: {height} (类型: {type(height).__name__})")
 
 # 字符串
+# str: 字符串类型，用于存储文本数据，用引号括起来
 name = "小明"
 message = "学习AI很有趣"
+# f-string: 格式化字符串的现代方式，用 f"...{变量}..." 的形式嵌入变量
 print(f"姓名: {name}")
 print(f"消息: {message}")
 
 # 布尔值
 is_student = True
 is_working = False
-print(f"是学生吗: {is_student}, 在工作吗: {is_working}")https://github.com/kurekako2017/codesp_study
+print(f"是学生吗: {is_student}, 在工作吗: {is_working}")
 
 # ============================================================
 # 2. 数据结构：列表（List）
@@ -44,23 +49,33 @@ print("2. 列表（List）- 有序、可修改")
 print("=" * 60)
 
 # 创建列表
+# list: 有序的可修改集合，用方括号 [] 定义，元素用逗号分隔
 scores = [85, 90, 78, 92, 88]
 print(f"成绩列表: {scores}")
+# 列表索引从 0 开始：scores[0] 是第一个元素
 print(f"第一个成绩: {scores[0]}")
+# 负索引：scores[-1] 表示最后一个元素，scores[-2] 表示倒数第二个，以此类推
 print(f"最后一个成绩: {scores[-1]}")
 
 # 列表操作
+# append() 方法：在列表末尾添加一个元素
 scores.append(95)  # 添加元素
 print(f"添加95后: {scores}")
 
+# 通过索引修改列表中的元素
 scores[0] = 86  # 修改元素
 print(f"修改第一个元素: {scores}")
 
+# sum() 计算列表元素的和，len() 计算列表长度
+# :.2f 表示格式化为两位小数的浮点数
 average = sum(scores) / len(scores)
 print(f"平均成绩: {average:.2f}")
 
-# 列表切片
+# 列表切片（Slicing）
+# 切片语法：list[start:end] 表示从 start 到 end-1 的元素（不包括 end）
+# scores[:3] 表示从开始到第3个元素（索引0、1、2）
 print(f"前3个成绩: {scores[:3]}")
+# scores[-2:] 表示从倒数第2个到末尾的所有元素
 print(f"后2个成绩: {scores[-2:]}")
 
 # ============================================================
@@ -71,6 +86,8 @@ print("3. 字典（Dictionary）- 键值对")
 print("=" * 60)
 
 # 创建字典
+# dict: 键值对的无序集合，用大括号 {} 定义
+# 每个元素由 "键" : 值 组成，键用来标识值
 student = {
     "name": "小明",
     "age": 25,
@@ -78,6 +95,7 @@ student = {
     "gpa": 3.8
 }
 print(f"学生信息: {student}")
+# 通过键来访问字典中的值
 print(f"姓名: {student['name']}")
 print(f"年龄: {student['age']}")
 
@@ -86,6 +104,8 @@ student['phone'] = '13800138000'
 print(f"添加电话后: {student}")
 
 # 遍历字典
+# .items() 方法返回字典的所有键值对
+# for 循环将每个键值对解包为 key 和 value 变量
 print("所有信息:")
 for key, value in student.items():
     print(f"  {key}: {value}")
