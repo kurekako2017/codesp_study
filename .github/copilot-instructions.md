@@ -1,88 +1,128 @@
 # Study Repository - AI Coding Agent Instructions
 
-## Architecture Overview
+## 📁 Repository Architecture
 
-This is a multi-language learning repository containing Java Spring Boot e-commerce application and Python AI experiments.
+Multi-domain learning workspace with **four completely isolated projects**:
 
-### Java E-Commerce Application (`java-projects/JtProject`)
+| Project | Type | Status | Purpose |
+|---------|------|--------|---------|
+| `java-projects/JtProject/` | Spring Boot 2.7 + Hibernate | Active | E-commerce app, manual Hibernate config |
+| `sap-lab/` | ABAP/CDS/RAP/CAP | Learning | 7-module SAP skill progression |
+| `python-projects/ai-lab/` | Python ML/AI | Active | ML fundamentals + LLM experiments |
+| `localstack-lab/` | AWS emulation | Active | S3/DynamoDB local testing |
 
-**Tech Stack:** Spring Boot 2.6.4, Hibernate 5 (manual config), JSP views, MySQL 8
+---
 
-**Critical Architectural Decision:** Uses **manual Hibernate configuration** instead of Spring Data JPA auto-configuration:
-- Main application class excludes `HibernateJpaAutoConfiguration.class`
-- Manual SessionFactory setup in [HibernateConfiguration.java](java-projects/JtProject/src/main/java/com/jtspringproject/JtSpringProject/HibernateConfiguration.java)
-- All DAOs use Hibernate `SessionFactory.getCurrentSession()` directly
+## 🔧 Java Spring Boot E-Commerce (JtProject)
 
-**3-Layer Architecture:**
-1. **Controllers** ([controller/](java-projects/JtProject/src/main/java/com/jtspringproject/JtSpringProject/controller/)): Handle HTTP requests, use stateful session tracking via static variables (`adminlogcheck`, `usernameforclass`)
-2. **Services** ([services/](java-projects/JtProject/src/main/java/com/jtspringproject/JtSpringProject/services/)): Thin delegation layer to DAOs
-3. **DAOs** ([dao/](java-projects/JtProject/src/main/java/com/jtspringproject/JtSpringProject/dao/)): Direct Hibernate Session API usage with `@Transactional`
+### Critical Architecture: Manual Hibernate + 3-Layer JSP
 
-**Models:** JPA entities in [models/](java-projects/JtProject/src/main/java/com/jtspringproject/JtSpringProject/models/) - Product, Category, User, Cart, CartProduct
+**Why manual?** `@SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)` disables Spring Data JPA. All session management is in [HibernateConfiguration.java](java-projects/JtProject/src/main/java/com/jtspringproject/JtSpringProject/HibernateConfiguration.java).
 
-## Critical Development Workflows
-
-### Database Setup
-```bash
-# Database runs on external host (192.168.10.2:3306)
-# Connection configured in application.properties
-# Initialize schema using basedata.sql:
-mysql -h 192.168.10.2 -u root -p123456 < java-projects/JtProject/basedata.sql
+**Data flow:**
+```
+Controller (static auth vars) 
+  ↓ 
+Service (thin delegation) 
+  ↓ 
+DAO (@Transactional, SessionFactory.getCurrentSession())
+  ↓ 
+Hibernate → MySQL (192.168.10.2:3306/ecommjava)
 ```
 
-### Build & Run (Maven)
+### Build & Test
 ```bash
 cd java-projects/JtProject
-./mvnw clean install       # Build project
-./mvnw spring-boot:run     # Run application (port 8080)
+./mvnw clean install              # Build + run tests
+./mvnw spring-boot:run            # Run on port 8080
+# or
+./start.sh                         # Shell script wrapper
 ```
 
-**View Resolution:** JSP files in [src/main/webapp/views/](java-projects/JtProject/src/main/webapp/views/) with prefix `/views/` and suffix `.jsp`
+### Code Patterns
 
-## Project-Specific Conventions
+| What | Where | Pattern |
+|------|-------|---------|
+| Entities | `models/` | `@Entity(name="PRODUCT")` — HQL queries use uppercase names |
+| DAOs | `dao/` | Call `sessionFactory.getCurrentSession()`, use `@Transactional` |
+| Services | `services/` | Lowercase bean names (`productService`), delegate to DAOs |
+| Controllers | `controller/` | Check static vars (`adminlogcheck`, `usernameforclass`) before processing |
+| Views | `src/main/webapp/views/` | JSP files, resolved as `/views/{name}.jsp` |
 
-### Naming & Code Style
-- **Lowercase class names for services/DAOs:** `productService`, `userDao` (non-standard Java convention)
-- **Entity table names:** Use uppercase in `@Entity(name="PRODUCT")`, queries reference these names
-- **DAO method naming:** Mix of `getProducts()` vs `deletProduct()` (typo pattern exists)
+### Configuration Gotchas
+- **Datasource prefix:** `db.*` not `spring.datasource.*` in [application.properties](java-projects/JtProject/src/main/resources/application.properties)
+- **Lazy loading:** Enable `spring.jpa.properties.hibernate.enable_lazy_load_no_trans=true` in properties
+- **Default users:** Admin (`admin/123`), User (`lisa/765`) from `basedata.sql`
+- **MySQL dialect:** Uses `MySQL5Dialect` (works with MySQL 8)
 
-### Authentication Pattern
-- **Role-based:** `ROLE_ADMIN` and `ROLE_NORMAL` stored in User entity
-- **Session management:** Controllers use static variables for login state (not HTTP session)
-- **Cookie usage:** Username stored in Cookie after successful login ([UserController.java](java-projects/JtProject/src/main/java/com/jtspringproject/JtSpringProject/controller/UserController.java#L70))
+---
 
-### Controller Patterns
-- **Dual route handling:** Both `@GetMapping` and `@RequestMapping(method=POST)` for form submissions
-- **ModelAndView returns:** Used for view navigation with data (not `@ResponseBody`)
-- **URL structure:** Admin routes prefixed with `/admin`, user routes at root
-- **Guard pattern:** Check login state at start of methods, redirect to login if unauthorized
+## 📚 SAP Learning Projects (sap-lab)
 
-### Database Interaction
-- **HQL queries:** Use entity names: `"from PRODUCT"` not SQL table names
-- **Transaction boundaries:** `@Transactional` at DAO layer (not service layer)
-- **Lazy loading workaround:** `spring.jpa.properties.hibernate.enable_lazy_load_no_trans=true` in properties
+**Structure:** 7 progressive modules in order (see [LEARNING_GUIDE.md](sap-lab/LEARNING_GUIDE.md)):
 
-## Key Integration Points
+1. **ABAP Cloud & Clean Core** — Language fundamentals + `abaplint` code quality
+2. **CDS Foundation** — Data models, views, associations
+3. **RAP Managed** — Auto-generated CRUD + annotations
+4. **RAP + Fiori Elements** — UI annotations (list/object pages)
+5. **RAP Unmanaged** — Custom logic, determinations, validations
+6. **RAP External Services** — HTTP clients, REST integration
+7. **CAP Quick Check** — CAP models vs RAP comparison
 
-**Configuration file:** [application.properties](java-projects/JtProject/src/main/resources/application.properties)
-- Custom property prefix `db.*` for datasource (not standard Spring `spring.datasource.*`)
-- Hibernate properties with `hibernate.*` prefix
-- MySQL connection to external host `192.168.10.2:3306/ecommjava`
+### Key Files
+- **CDS examples:** `02-cds-foundation/` (ProductMaster.cds, associations)
+- **ABAP patterns:** `01-abap-cloud-clean-core/example.abap` + [CODE_EXPLANATION.md](sap-lab/projects/01-abap-cloud-clean-core/CODE_EXPLANATION.md)
+- **Fiori annotations:** [ANNOTATIONS.md](sap-lab/projects/04-rap-fiori-elements/ANNOTATIONS.md)
 
-**Static resources:** Product images stored in [src/main/resources/Product Images/](java-projects/JtProject/src/main/resources/Product%20Images/)
+**No build pipeline** — manual code review and SAP system testing. Document changes in adjacent `NOTES.md` or `CODE_EXPLANATION.md`.
 
-## Testing & Debugging
+---
 
-**Test endpoints:** 
-- `/test` and `/test2` routes in [UserController.java](java-projects/JtProject/src/main/java/com/jtspringproject/JtSpringProject/controller/UserController.java#L130) demonstrate Model and ModelAndView usage
+## 🐍 Python AI Learning (python-projects/ai-lab)
 
-**Default credentials (from basedata.sql):**
-- Admin: username=`admin`, password=`123`
-- User: username=`lisa`, password=`765`
+**Status:** Active learning path with NumPy, Pandas, ML (scikit-learn), deep learning foundations.
 
-## Important Notes
+### Setup
+```bash
+cd python-projects/ai-lab
+./setup.sh                    # Creates .venv, installs dependencies
+source .venv/bin/activate
+python 01_python_basics.py    # Start with basics
+```
 
-- **No REST API:** All endpoints return JSP views, not JSON
-- **Python project empty:** `python-projects/ai-lab` has no code yet
-- **Hibernate compatibility:** Using older `org.hibernate.dialect.MySQL5Dialect` for MySQL 8
-- **Port conflicts:** Application runs on default port 8080
+**Files:**
+- `01_python_basics.py` — Core Python concepts
+- `02_numpy_intro.py` — Array operations
+- `06_ml_intro.py` — Machine learning algorithms
+- [LEARNING_GUIDE.md](python-projects/ai-lab/LEARNING_GUIDE.md) — Structured curriculum
+- [START_HERE.txt](python-projects/ai-lab/START_HERE.txt) — Entry point
+
+---
+
+## ☁️ LocalStack Lab (localstack-lab)
+
+**Purpose:** Isolated AWS service emulation (S3, DynamoDB) without affecting other projects.
+
+### Run
+```bash
+# Python
+cd localstack-lab && ./scripts/bootstrap.sh
+source .venv/bin/activate
+python projects/hello-localstack/main.py
+
+# Java (embedded localstack)
+cd projects/hello-localstack-java
+mvn clean package && mvn exec:java
+```
+
+**Endpoint:** `http://s3.localhost.localstack.cloud:4566` (override with `LOCALSTACK_ENDPOINT_URL`)
+
+---
+
+## ⚠️ Critical "DO NOTs"
+
+- **Java project:** Don't use `spring.datasource.*` — use `db.*` prefix
+- **Java project:** Don't modify Hibernate config without testing manual SessionFactory setup
+- **All projects:** Don't add cross-project dependencies (each is standalone)
+- **Python:** Don't install packages to global `venv` — use project-local `.venv`
+- **Java project:** All endpoints return **JSP views**, not JSON REST responses
