@@ -71,6 +71,20 @@
 - 用免费层并设置配额告警；数据库集中单一区域。
 - 打包与压缩图片；用系统字体或单一可变字体。
 
+## onamae.com RS 方案评估（可行性与性价比）
+- 适用范围：纯静态展示页或轻量 PHP 站点尚可；若需 Node/Next.js/Headless CMS/常驻 API，RS 为共享主机/CGI 环境，兼容性与性能都有限。
+- 性能与可靠性：CPU/I/O 共享，流量波动下性能不可预期；无内建 CDN，需自己接 Cloudflare。并发与后台任务支持弱。
+- SSL 与域名：若套餐不含自动证书，需要自管 Let’s Encrypt 续期或付费证书；用 Cloudflare 代理可简化但仍需配置源站安全与缓存策略。
+- 邮件与表单：自带 SMTP 送达率一般，建议改用 Resend/SendGrid/Zoho/ImprovMX+Gmail 等专用服务；表单存储、防刷、验证码需自建。
+- 数据库与备份：通常是共享 MySQL，资源/连接数有限且备份工具弱；不如托管 Postgres/MySQL（Supabase/Render/Neon/PlanetScale）。
+- 安全与可观测：无默认 WAF/速率限制/告警，日志与监控需自建；共享环境隔离性一般。
+- 性价比结论：价格低但隐藏成本在时间和维护；若要后台/新闻/表单存储/邮件通知，推荐改用“前端 (Pages/Vercel/Netlify) + 后端 (Render/Fly/Railway/Supabase Edge) + DB (Supabase/Neon) + 邮件 (Resend/Zoho)”的组合，更省运维且性能可靠。
+- 若必须继续使用 RS：
+	- 选纯静态页面 + Cloudflare 代理 + Let’s Encrypt 自动续期。
+	- 后端能力尽量外包：表单用第三方（Formspree/Web3Forms/Resend API），新闻用 SaaS Headless CMS（Contentful/Hygraph）。
+	- 若自建后台，优先 PHP+MySQL（兼容性好），加登录/CSRF/限流；谨慎资源与并发。
+	- 自行设定 DB 定时备份、存活监测（Uptime Kuma/Better Stack）和错误日志收集。
+
 ## 练习项目梯度
 1) 纯静态落地页 + 联系表单直发 Formspree/Resend（无数据库）。
 2) 静态站 + PocketBase 存新闻与联系记录（单二进制后端）。
