@@ -3,5 +3,20 @@
     "java.configuration.updateBuildConfiguration": "automatic",
     "aws.experimental.endpoints": {
         "s3": "http://s3.localhost.localstack.cloud:4566"
-    }
+    },
+    // GitHub Copilot 配置
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false
+    },
+    // 在编辑器右键菜单中显示 Copilot 命令
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python",
+        "editor.formatOnSave": true
+    },
+    "java.completion.chain.enabled": true,
+    "github.copilot.chat.agent.autoFix": true,
+    "github.copilot.chat.alternateGeminiModelFPrompt.enabled": true,
+    "github.copilot.chat.languageContext.inline.typescript.enabled": true
 }
