@@ -1,3 +1,22 @@
+// --- 自动化渲染 news.json 新闻内容 ---
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('news.json')
+        .then(response => response.json())
+        .then(newsList => {
+            const newsContainer = document.querySelector('.news-list');
+            if (!newsContainer) return;
+            newsList.forEach(item => {
+                const article = document.createElement('article');
+                article.className = 'news-item';
+                article.innerHTML = `
+                    <time class="news-date">${item.date}</time>
+                    <h3 class="news-title">${item.title}</h3>
+                    <p class="news-summary">${item.summary}</p>
+                `;
+                newsContainer.appendChild(article);
+            });
+        });
+});
 // モバイルメニュー切り替え
 const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
 const navMenu = document.querySelector('.nav-menu');
