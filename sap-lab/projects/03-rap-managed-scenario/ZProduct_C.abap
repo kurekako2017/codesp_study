@@ -6,7 +6,7 @@
 *&---------------------------------------------------------------------*
 
 @EndUserText.label: 'Product BO Implementation'
-CLASS lhc_product DEFINITION INHERITING FROM cl_abap_behavior_handler.
+CLASS ZCL_PRODUCT_BO DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
   PUBLIC SECTION.
     " 类构造方法：在类首次加载时执行
@@ -30,7 +30,7 @@ ENDCLASS.
 *&---------------------------------------------------------------------*
 * 类实现部分
 *&---------------------------------------------------------------------*
-CLASS lhc_product IMPLEMENTATION.
+CLASS ZCL_PRODUCT_BO IMPLEMENTATION.
 
   " ===== 类构造方法 =====
   " 说明: 首次使用该类时自动调用
