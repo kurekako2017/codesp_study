@@ -25,10 +25,10 @@ define behavior for ZProduct alias Product
   field (mandatory) price;             // 产品价格不能为空
   
   // 只读字段: 创建后不能修改（由系统管理）
-  field (read only) created_at,        // 创建时间由系统设置
-                    created_by,        // 创建人由系统自动赋值
-                    changed_at,        // 最后修改时间自动更新
-                    changed_by;        // 最后修改人自动赋值
+  field (readonly) created_at,        // 创建时间由系统设置
+                  created_by,        // 创建人由系统自动赋值
+                  changed_at,        // 最后修改时间自动更新
+                  changed_by;        // 最后修改人自动赋值
 
   // ===== Determination (自动触发的业务逻辑) =====
   // 在特定事件发生时自动执行，用于设置默认值
@@ -38,3 +38,6 @@ define behavior for ZProduct alias Product
   // 在保存前验证数据，验证失败则阻止保存
   validation check_price_positive on save { create; update; }
 }
+
+// 指定行为实现类（在 ABAP 中实现 determination/validation 的逻辑）
+implementation in class ZCL_PRODUCT_BO unique;

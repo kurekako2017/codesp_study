@@ -1,4 +1,4 @@
-// Stub table for learning — zproduct_prices
+// Stub table for learning - zproduct_prices
 // 用于在编辑器中解析引用，保持为学习用例，不会在生产中使用
 
 @AbapCatalog.sqlViewName: 'ZPRODUCTPRICES'
