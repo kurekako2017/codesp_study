@@ -1,9 +1,9 @@
-# SAP Lab Docs
+# SAP 实验文档
 
-Use this space for notes, links, and findings while exploring SAP topics.
+在此存放探索 SAP 相关主题时的笔记、链接与发现。
 
-Suggested sections:
-- Environment notes (SDK versions, CLI usage)
-- API snippets or sample payloads
-- Troubleshooting tips
-- Links to SAP help portal pages and blogs
+建议分区：
+- 环境记录（SDK 版本、CLI 使用说明）
+- API 片段或示例请求/响应
+- 故障排查要点
+- 指向 SAP 帮助门户或技术博客的链接

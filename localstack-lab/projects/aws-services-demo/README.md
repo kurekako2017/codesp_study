@@ -1,152 +1,152 @@
-# AWS Services Demo for LocalStack
+# 本地 LocalStack 的 AWS 服务演示
 
-Complete Java application for testing AWS services (DynamoDB, SQS, S3) with LocalStack.
+这是一个完整的 Java 应用，用于在本地使用 LocalStack 测试 AWS 服务（DynamoDB、SQS、S3）。
 
-## 📋 Project Overview
+## 📋 项目概览
 
-This is a standalone Java application that demonstrates how to interact with AWS services using LocalStack for local development and testing.
+该项目是一个独立的 Java 演示程序，展示如何在本地开发和测试中使用 LocalStack 与 AWS 服务交互。
 
-**Author**: GitHub Copilot AI  
-**Created**: 2026-01-02  
-**Purpose**: LocalStack AWS services testing and demonstration
+**作者**：GitHub Copilot AI  
+**创建时间**：2026-01-02  
+**用途**：LocalStack AWS 服务测试与演示
 
-## ✨ Features
+## ✨ 功能亮点
 
-- ✅ **DynamoDB Testing** - Table creation, item CRUD operations
-- ✅ **SQS Testing** - Queue creation, message send/receive/delete
-- ✅ **S3 Testing** - Bucket creation, file upload/download
-- ✅ **Automatic Logging** - Test results saved to log file
-- ✅ **Detailed Comments** - Comprehensive JavaDoc and inline comments
-- ✅ **Complete Documentation** - 7 markdown documentation files
+- ✅ **DynamoDB 测试** — 表创建、项的增删改查
+- ✅ **SQS 测试** — 队列创建、消息发送/接收/删除
+- ✅ **S3 测试** — 存储桶创建、文件上传/下载
+- ✅ **自动日志** — 测试结果保存到日志文件
+- ✅ **详细注释** — 完整的 JavaDoc 与行内注释
+- ✅ **完整文档** — 多个 Markdown 文档说明
 
-## 🚀 Quick Start
+## 🚀 快速开始
 
-### Prerequisites
+### 前置条件
 
-- Java 11 or higher
-- Maven 3.6 or higher
+- Java 11 或更高
+- Maven 3.6 或更高
 - Docker Desktop
-- LocalStack running on port 4566
+- LocalStack 在 4566 端口运行
 
-### Run Tests
+### 运行演示
 
 ```bash
-# Start LocalStack
+# 启动 LocalStack（示例）
 docker start localstack
 
-# Run the demo
+# 运行演示程序
 cd localstack-lab/projects/aws-services-demo
 mvn clean compile exec:java
 ```
 
-### View Results
+### 查看结果
 
 ```bash
-# View log file
+# 查看日志文件
 cat aws-services-test-result.log
 
-# Or on Windows
+# 或在 Windows 上
 notepad aws-services-test-result.log
 ```
 
-## 📊 Test Results
+## 📊 测试结果
 
-All tests **PASSED** ✓
+所有测试 **通过** ✓
 
 ```
 ========================================
-  Test Summary
+  测试摘要
 ========================================
-DynamoDB: ✓ PASSED
-SQS:      ✓ PASSED
-S3:       ✓ PASSED
+DynamoDB: ✓ 通过
+SQS:      ✓ 通过
+S3:       ✓ 通过
 ----------------------------------------
-Result: ✓ ALL TESTS PASSED (3/3)
+结果: ✓ 所有测试通过 (3/3)
 ========================================
 ```
 
-## 📁 Project Structure
+## 📁 项目结构
 
 ```
 aws-services-demo/
 ├── src/main/java/com/example/aws/
-│   └── AwsServicesDemo.java          # Main application (single file!)
-├── pom.xml                           # Maven configuration
-├── run-demo.ps1                      # PowerShell run script
-├── aws-services-test-result.log      # Test results log
+│   └── AwsServicesDemo.java          # 主程序（单文件示例）
+├── pom.xml                           # Maven 配置
+├── run-demo.ps1                      # PowerShell 运行脚本
+├── aws-services-test-result.log      # 测试结果日志
 └── docs/
-    ├── ARCHITECTURE.md               # Code architecture
-    ├── PROJECT_INFO.md               # Project details
-    ├── LOG_FILE_FEATURE.md           # Logging feature
-    ├── TEST_RESULTS.md               # Test report
-    └── ...                           # More documentation
+    ├── ARCHITECTURE.md               # 代码架构说明
+    ├── PROJECT_INFO.md               # 项目详情
+    ├── LOG_FILE_FEATURE.md           # 日志功能说明
+    ├── TEST_RESULTS.md               # 测试报告
+    └── ...                           # 更多文档
 ```
 
-## 🔧 Technologies
+## 🔧 使用技术
 
-- **Language**: Java 11
-- **Build Tool**: Maven 3.x
-- **AWS SDK**: AWS SDK for Java v2 (2.25.65)
-- **LocalStack**: Community Edition
-- **Services**: DynamoDB, SQS, S3
+- **语言**：Java 11
+- **构建工具**：Maven 3.x
+- **AWS SDK**：AWS SDK for Java v2 (2.25.65)
+- **LocalStack**：社区版
+- **覆盖服务**：DynamoDB、SQS、S3
 
-## 📖 Documentation
+## 📖 文档索引
 
-| Document | Description |
-|----------|-------------|
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Code structure and design patterns |
-| [PROJECT_INFO.md](PROJECT_INFO.md) | Project origin and details |
-| [LOG_FILE_FEATURE.md](LOG_FILE_FEATURE.md) | Log file functionality |
-| [TEST_RESULTS.md](TEST_RESULTS.md) | Detailed test results |
-| [UPLOAD_GUIDE.md](UPLOAD_GUIDE.md) | Git upload instructions |
+| 文档 | 说明 |
+|------|------|
+| [ARCHITECTURE.md](ARCHITECTURE.md) | 代码结构与设计模式 |
+| [PROJECT_INFO.md](PROJECT_INFO.md) | 项目来源与详细信息 |
+| [LOG_FILE_FEATURE.md](LOG_FILE_FEATURE.md) | 日志功能说明 |
+| [TEST_RESULTS.md](TEST_RESULTS.md) | 详细测试结果 |
+| [UPLOAD_GUIDE.md](UPLOAD_GUIDE.md) | Git 上传说明 |
 
-## 🎯 What Does It Test?
+## 🎯 测试覆盖内容
 
 ### DynamoDB
-- Create table with hash key
-- Insert item with attributes
-- Query item by primary key
-- List all tables
+- 创建带哈希键的表
+- 插入带属性的项
+- 按主键查询项
+- 列出所有表
 
 ### SQS
-- Create standard queue
-- Send message to queue
-- Receive message from queue
-- Delete processed message
-- List all queues
+- 创建标准队列
+- 发送消息到队列
+- 从队列接收消息
+- 删除已处理的消息
+- 列出所有队列
 
 ### S3
-- Create bucket
-- Upload file (from memory string)
-- Download file
-- List all buckets
+- 创建存储桶
+- 上传文件（内存字符串）
+- 下载文件
+- 列出所有存储桶
 
-## 💡 Key Features
+## 💡 关键特性说明
 
-### Single File Architecture
-All code in **one Java class** for simplicity and easy understanding.
+### 单文件架构
+示例代码集中在 **一个 Java 类** 中，便于理解和学习。
 
-### Automatic Log Generation
-Test results are automatically saved to `aws-services-test-result.log`:
-- Timestamp of execution
-- Detailed step-by-step output
-- Success/failure summary
-- Error stack traces (if any)
+### 自动日志生成
+测试结果会自动写入 `aws-services-test-result.log`：
+- 执行时间戳
+- 逐步详细输出
+- 成功/失败汇总
+- 错误堆栈（如有）
 
-### Detailed Comments
-Every method and important code block has comprehensive comments explaining:
-- What it does
-- How it works
-- Why it's designed that way
+### 详细注释
+每个方法和关键代码块均提供详尽注释，说明：
+- 功能说明
+- 工作原理
+- 设计原因
 
-## 🔍 How to Read the Code
+## 🔍 如何阅读代码
 
-The main class `AwsServicesDemo.java` contains:
+主类 `AwsServicesDemo.java` 包含：
 
-1. **Configuration** - LocalStack endpoint and region
-2. **Client Factories** - Methods to create AWS clients
-3. **Test Methods** - One method per service
-4. **Main Method** - Orchestrates all tests
+1. **配置** — LocalStack 端点和区域
+2. **客户端工厂** — 创建 AWS 客户端的方法
+3. **测试方法** — 每个服务对应一个测试方法
+4. **主方法** — 协调所有测试执行
 
 ```java
 main()
@@ -155,7 +155,7 @@ main()
   └─> testS3()
 ```
 
-## 📝 Sample Output
+## 📝 示例输出
 
 ```
 [1] Testing DynamoDB...
@@ -184,20 +184,20 @@ main()
 [3] S3 Test: ✓ SUCCESS
 ```
 
-## 🛠️ Configuration
+## 🛠️ 配置项
 
-### LocalStack Endpoint
+### LocalStack 端点
 ```java
 private static final String LOCALSTACK_ENDPOINT = "http://localhost:4566";
 ```
 
-### AWS Region
+### AWS 区域
 ```java
 private static final Region REGION = Region.US_EAST_1;
 ```
 
-### Credentials
-Uses dummy credentials (`test/test`) - LocalStack doesn't validate them.
+### 凭证
+使用虚拟凭证（`test/test`），LocalStack 不会验证凭证有效性。
 
 ## 📚 Learn More
 
