@@ -1,47 +1,36 @@
-*&---------------------------------------------------------------------*
-*& CDS 视图: ZProductMaster
-*& 说明: 产品主数据视图 - 展示产品的基本信息和定价分类
-*& 功能: 查询产品信息，自动计算价格等级（Premium/Standard/Economy）
-*& 关联: 与定价视图关联，一个产品可以有多个价格记录
-*&---------------------------------------------------------------------*
+//---------------------------------------------------------------------
+// NOTE: 仅作学习示例 - Do NOT use in production
+// CDS 视图: ZProductMaster
+// 说明: 产品主数据视图 - 示例用于教学和编辑器解析
+// 功能: 展示产品字段与价格等级计算（示例）
+// 提示: 为在编辑器中消除“表不存在”错误，本工作区包含对应的 stub 表 `zproducts`。
+//---------------------------------------------------------------------
 
-@AccessControl.authorizationCheck: #CHECK  // 启用权限检查
-@EndUserText.label: 'Product Master Data'   // UI 显示标签
-@Metadata.ignorePropagatedAnnotations: true // 忽略传播的注解
+@AbapCatalog.sqlViewName: 'ZPRODUCTMASTER'
+@AbapCatalog.compiler.compareFilter: true
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'Product Master Data'
 
-define view entity ZProductMaster
+// 学习用示例：底层表请参见 sap-lab/projects/02-cds-foundation/zproducts.cds
+define view ZProductMaster
   as select from zproducts as products
-  // 关联定义: 一个产品可以有多个价格记录
-  association [0..*] to ZProductPricing as _pricing on _pricing.product_id = products.product_id
 {
   // ===== 主键字段 =====
-  key products.product_id,              // 产品唯一标识
-  
+  key products.product_id,
+
   // ===== 基本信息 =====
-      products.product_name,            // 产品名称
-      products.description,             // 产品描述
-      products.category,                // 产品类别
-  
+      products.product_name,
+      products.description,
+      products.category,
+
   // ===== 审计字段 =====
-      products.created_at,              // 创建时间
-      products.changed_at,              // 最后修改时间
-      
+      products.created_at,
+      products.changed_at,
+
   // ===== 计算字段: 价格等级 =====
-  // 根据价格自动分配等级
-  // 价格 > 1000 -> 'Premium' (高端)
-  // 价格 > 500  -> 'Standard' (标准)
-  // 其他         -> 'Economy' (经济)
-      cast(
-        case
-          when products.price > 1000
-            then 'Premium'
-          when products.price > 500
-            then 'Standard'
-          else 'Economy'
-        end
-        as zproduct_category
-      ) as price_category,              // 价格等级
-      
-      // ===== 关联字段 =====
-      _pricing                          // 关联到定价视图
+      case
+        when products.price > 1000 then 'Premium'
+        when products.price > 500 then 'Standard'
+        else 'Economy'
+      end as price_category
 }
